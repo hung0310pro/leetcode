@@ -22,6 +22,30 @@ function reverse($x)
 	return $string;
 }
 
+function reverse($x)
+{
+    if ($x < 0) {
+        $a = -1;
+        $x = 0 - $x;
+    } else {
+        $a = 1;
+    }
+
+    $n = strlen($x);
+    $ret = "";
+    $arr = [];
+    for ($i = 0; $i < $n; $i++) {
+        $ret .= $x % 10;
+        $x = floor($x / 10);
+    }
+
+    $ret = $ret * $a;
+    if ($ret >= pow(2, 31) - 1 || $ret <= pow(2, 31) * -1) {
+        return 0;
+    }
+    return $ret;
+}
+
 +https://leetcode.com/problems/can-make-arithmetic-progression-from-sequence/submissions/
 
 function canMakeArithmeticProgression($arr)
@@ -316,3 +340,23 @@ function countPrimes($n)
 
 	return $result;
 }
+
++ https://leetcode.com/problems/intersection-of-two-arrays-ii/submissions/
+$arr = [];
+if (count($nums1) == 0 || count($nums2) == 0) {
+    return $arr;
+}
+
+foreach ($nums1 as $key => $value) {
+    $dem = 0;
+    foreach ($nums2 as $keys => $val) {
+        if ($value === $val) {
+            $arr[] = $value;
+            $nums2[$keys] = 'aaaaaa';
+            break;
+        }
+    }
+
+}
+
+return $arr;
