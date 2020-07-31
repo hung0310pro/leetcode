@@ -360,3 +360,31 @@ foreach ($nums1 as $key => $value) {
 }
 
 return $arr;
+
++ https://leetcode.com/problems/exchange-seats/
+ SELECT
+(CASE
+    WHEN MOD(id, 2) != 0 AND counts != id THEN id + 1
+    WHEN MOD(id, 2) != 0 AND counts = id THEN id
+    ELSE id - 1
+END) AS id,
+student
+FROM
+seat,
+(SELECT
+    COUNT(*) AS counts
+FROM
+    seat) AS seat_counts
+ORDER BY id ASC;
+
++ https://leetcode.com/problems/shuffle-the-array/
+function shuffle($nums, $n)
+{
+	$arr = [];
+	for ($i = 0; $i < $n; $i++) {
+		$arr[] = $nums[$i];
+		$arr[] = $nums[$n + $i];
+	}
+
+	return $arr;
+}
