@@ -376,18 +376,12 @@ function shuffle($nums, $n)
 + https://leetcode.com/problems/exchange-seats/
  SELECT
 (CASE
-    WHEN MOD(id, 2) != 0 AND counts != id THEN id + 1
-    WHEN MOD(id, 2) != 0 AND counts = id THEN id
+    WHEN MOD(id, 2) != 0 AND count != id THEN id + 1
+    WHEN MOD(id, 2) != 0 AND count = id THEN id
     ELSE id - 1
-END) AS id,
-student
-FROM
-seat,
-(SELECT
-    COUNT(*) AS counts
-FROM
-    seat) AS seat_counts
+END) AS id, student FROM seat, (SELECT COUNT(*) AS count FROM seat) AS seat_count
 ORDER BY id ASC;
+
 
 + https://leetcode.com/problems/pairs-of-songs-with-total-durations-divisible-by-60/submissions/
 $n = count($nums);
@@ -402,3 +396,28 @@ for ($i = 0; $i < $n; $i++) {
 }
 
 return $dem;
+
++ https://leetcode.com/problems/valid-perfect-square/submissions/
+
+function isPerfectSquare($num)
+{
+	if ($num == 1 || $num == 0) {
+		return true;
+	}
+
+	if ($num < 4) {
+		return false;
+	}
+	$tich = 1;
+	$i = 2;
+	while ($tich <= $num) {
+
+		$tich = $i * $i;
+		if ($tich == $num) {
+			return true;
+		}
+		$i++;
+	}
+
+	return false;
+}
