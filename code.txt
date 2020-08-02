@@ -497,3 +497,76 @@ function findLengthOfLCIS($nums)
 	}
 	return $max;
 }
+
++ https://leetcode.com/problems/positions-of-large-groups/
+
+function largeGroupPositions($S) {
+    $length = strlen($S);
+    $dem = 1;
+    $arr = [];
+
+    for ($i = 0; $i < $length; $i++) {
+        $param1 = substr($S, $i, 1);
+        $param2 = substr($S, $i + 1, 1);
+        if ($param1 === $param2) {
+            $dem++;
+        } else {
+            if ($dem >= 3) {
+                $stpos = $i - $dem + 1;
+                $endpos = $i;
+                array_push($arr, [$stpos, $endpos]);
+            }
+            $dem = 1;
+        }
+    }
+    return $arr;
+}
+
++ https://leetcode.com/problems/number-of-students-doing-homework-at-a-given-time/submissions/
+
+function busyStudent($startTime, $endTime, $queryTime) {
+    $dem = 0;
+    for ($i = 0 ; $i < count($startTime) ; $i++) {
+
+        if ($startTime[$i] > $queryTime || $queryTime > $endTime[$i]) {
+            continue;
+        }
+
+        if ($startTime[$i] <= $queryTime && $queryTime <= $endTime[$i]) {
+            $dem++;
+        }
+    }
+    return $dem;
+}
+
++ https://leetcode.com/problems/the-k-weakest-rows-in-a-matrix/
+
+function kWeakestRows($mat, $k) {
+    $arr = [];
+    $arr1 = [];
+    $n = count($mat);
+    for ($i = 0; $i < $n; $i++) {
+        $arr[] = array_sum($mat[$i]);
+        $arr1[] = array_sum($mat[$i]);
+    }
+
+    sort($arr);
+
+    $dem = 0;
+    $arr2 = [];
+    for ($i = 0; $i < $n; $i++) {
+        for ($j = 0; $j < $n; $j++) {
+            if ($arr1[$j] === $arr[$i]) {
+                $dem++;
+                $arr2[] = $j;
+                $arr1[$j] = "aaaaaaaaa";
+                break;
+            }
+        }
+        if ($dem == $k) {
+            break;
+        }
+    }
+
+    return $arr2;
+}
