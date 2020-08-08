@@ -570,3 +570,62 @@ function kWeakestRows($mat, $k) {
 
     return $arr2;
 }
+
++ https://leetcode.com/problems/majority-element/submissions/
+
+function majorityElement($nums) {
+    $count = count($nums);
+    $sum = 0;
+    $arr = [];
+    $arr1 = [];
+    for ($i = 0; $i < $count; $i++) {
+        if (!isset($arr[$nums[$i]])) {
+            $arr[$nums[$i]] = 1;
+        } else {
+            $arr[$nums[$i]] += 1;
+        }
+    }
+
+    foreach ($arr as $key => $val) {
+        if ($val > $count / 2) {
+            return $key;
+        }
+    }
+}
+
++ https://leetcode.com/problems/simplified-fractions/submissions/
+
+function simplifiedFractions($n) {
+    $arr = [];
+    $arr1 = [];
+    for ($i = 1; $i < $n; $i++) {
+        for ($j = $i + 1; $j <= $n; $j++) {
+            $a = $i/$j;
+            if (!isset($arr["$a"])) {
+                $arr["$a"] = "$i/$j";
+            }
+        }
+    }
+
+    foreach ($arr as $key => $val) {
+        $arr1[] = $val;
+    }
+    return $arr1;
+}
+
++ https://leetcode.com/problems/integer-break/
+
+function integerBreak($n) {
+    $max = 0;
+    for ($i = 1; $i < $n; $i++) {
+        for ($j = 1; $j <= $n / $i; $j++) {
+            $a = ($n - $i * $j);
+            $b = pow($i, $j) * $a;
+            if ($max < $b) {
+                $max = $b;
+            }
+        }
+    }
+
+    return $max;
+}
