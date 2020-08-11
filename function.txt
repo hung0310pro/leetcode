@@ -1,0 +1,84 @@
+- Function
+** Áp dụng parten design.
++ Factory method(parten design) : 
++ Factory Method Pattern phát huy được ưu điểm của nó trong một số trường hợp sau:
+
+- Khi bạn chưa biết nên khởi tạo đối tượng mới từ class nào.
+
+- Khi bạn muốn tập trung các đoạn code liên quan đến việc khởi tạo các đối tượng mới về cùng một nơi để dễ thao tác và xử lý.(class ShapeFactory ở ví dụ ở vibo)
+
+- Khi bạn không muốn người dùng phải biết hết tên của các class có liên quan đến quá trình khởi tạo cũng như muốn che giấu, đóng gói toàn bộ logic của quá trình khởi tạo một đối tượng mới nào đó khỏi phía người dùng.
+
++++ Ưu điểm
+- Factory Method Pattern giúp hạn chế sự phụ thuộc giữa creator và concrete products.
+- Factory Method Pattern giúp gom các đoạn code tạo ra product vào một nơi trong chương trình, nhờ đó giúp dễ theo dõi và thao tác.
+- Với Factory Method Pattern, chúng ta có thể thoải mái thêm nhiều loại product mới vào chương trình mà không làm thay đổi các đoạn code nền tảng đã có trước đó.
++++ Nhược điểm
+Code có thể trở nên nhiều hơn và phức tạp hơn do đòi hỏi phải sử dụng nhiều class mới có thể cài đặt được pattern này
+
+Tham khảo (https://vi.fitwp.com/factory-method-pattern/)
+
+** Đặt tên hàm rõ ràng, nên chia 1 hàm lớn thành các hàm nhỏ, từ đó dễ đặt tên cho mỗi hàm nhỏ hơn. Viết tên function và argument dễ hiểu Sao cho đọc phát biết luôn function để làm gì cần truyền biến như nào và return về cái gì. Ngoài ra khi viết 1 hàm thì nên căn chỉnh các dùng code lên, xuống dòng, thụt vào, ra sao cho rõ ràng và được căn chỉnh hợp lí. 
+
+** Trong 1 function nên cẩn thận không lại thay đổi mấy cái biến dùng chung, argument của function đặt tên sao cho dễ hiểu. Ngoài ra trong Opp thì tên của method vs tên của Object cx nên đặt dễ hiểu, rõ ràng.
+
+** Khi một hàm dường như cần nhiều hơn hai hoặc ba đối số, có khả năng là một số
+những đối số đó phải được gói thành một lớp của riêng chúng. Thì có thể đóng gói các biến đó vào 1 lớp rồi khai báo như sau : 
+
+Circle makeCircle(double x, double y, double radius);
+
+Circle makeCircle(PointCenter, double radius);
+Khi ấy các biến x, y, radius cùng trong class PointCenter
+Reducing the number of arguments by creating objects out of them may seem like cheating.
+
+** Đôi khi chúng ta muốn truyền một số biến đối số vào một hàm
+ví dụ : String.format("%s worked %.2f hours.", name, hours);
+
+Nếu tất cả các đối số biến đều được xử lý giống nhau, như trong ví dụ trên, thì chúng tương đương với một đối số duy nhất của kiểu Danh sách. như là  : 
+
+void monad(Integer... args);
+void dyad(String name, Integer... args);
+void triad(String name, int count, Integer... args);
+
+** Các hàm nên làm một cái gì đó hoặc trả lời một cái gì đó, nhưng không phải cả hai. 1 Hàm chỉ nên thay đổi trạng thái của một đối tượng hoặc nó sẽ trả về một số thông tin về đối tượng đó. Làm cả hai thường dẫn đến nhầm lẫn. Ví dụ : 
+
+public boolean set(String attribute, String value) {
+	if (set("username", "unclebob"))...
+}
+
+thì nên viết là : 
+public boolean set(String attribute, String value) {
+	if (attributeExists("username")) {
+		setAttribute("username", "unclebob")....;
+	}
+}
+
+** Tạo các trả về lỗi vs mã lỗi riêng biệt để từ đó người code có thể hiểu những lỗi đang phát sinh là gì để sửa nó, ngoài ra ta có thể dùng try/catch trả về mà lỗi của Exception tương ứng.
+
+** Try/catch blocks are ugly in their own right. They confuse the structure of the code and
+mix error processing with normal processing. So it is better to extract the bodies of the try
+and catch blocks out into functions of their own.
+Ví dụ 
+ public void delete(Page page) {
+	 try {
+	 	deletePageAndAllReferences(page);
+	 }
+ 	catch (Exception e) {
+ 		logError(e);
+ 	}
+ }
+ private void deletePageAndAllReferences(Page page) throws Exception {
+ 	deletePage(page);
+ 	registry.deleteReference(page.name);
+ 	configKeys.deleteKey(page.name.makeKey());
+ }
+ private void logError(Exception e) {
+ 	logger.log(e.getMessage());
+ }
+
+ - Ở trên tách ra làm 2 cái, hàm delete đã xử lý lỗi. Còn hàm deletePageAndAllRefferences là tất cả về quá trình xóa 1 trang. Xử lý lỗi có thể được bỏ qua. Nhìn vào trên thì dễ dàng hiểu và dễ dàng sửa đổi hơn.
+
+- Tóm lại : Các hàm chỉnên làm một việc. Vì vậy, ví dụ một hàm xử lý lỗi không nên làm gì khác(như trong ví dụ trên).
+
+** Nên tránh việc trùng lặp code, hàm, điều này dễ khiến cho 1 hàm bị phình to ra, code không được tối ưu, ngoài ra sẽ tiêu tốn tài nguyên hơn, nên viết 1 hàm tổng quan và dùng đc nhiều chỗ hơn là việc mình viết đi viết lại 1 hàm ở nhiều chỗ mà lại có cùng 1 chức năng.
+
