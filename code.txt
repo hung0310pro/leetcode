@@ -629,3 +629,25 @@ function integerBreak($n) {
 
     return $max;
 }
+
++ https://leetcode.com/problems/minimum-size-subarray-sum/
+check sum array (with while)
+$nums = [2, 3, 1, 2, 4, 3];
+$s = 7;
+$dem = PHP_INT_MAX;
+$check = array_sum($nums);
+if ($check < $s) {
+	return 0;
+}
+$count = count($nums);
+$j = 0;
+$sum = 0;
+for ($i = 0; $i < $count; $i++) {
+	$sum += $nums[$i];
+	while ($sum >= $s) {
+		$dem = min($dem, $i - $j + 1);
+		$sum -= $nums[$j];
+		$j++;
+	}
+}
+return $dem;
